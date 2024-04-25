@@ -22,6 +22,7 @@ import java.util.Date;
 public interface HoaDonDao extends Remote {
     public boolean themHoaDon(HoaDon hoaDon) throws RemoteException;
     public	HoaDon getHDTheoMa(String ma) throws RemoteException;
+    public	ArrayList<HoaDon> getAllHoaDons() throws RemoteException;
     public ArrayList<HoaDon> getHDTheoTenKH(String tenKH) throws RemoteException;
     public	ArrayList<HoaDon> getHDTheoNgay(Date ngayBatDau, Date ngayKetThuc) throws RemoteException;
     public	ArrayList<HoaDon> getHDTheoMaNV(String maNV) throws RemoteException;

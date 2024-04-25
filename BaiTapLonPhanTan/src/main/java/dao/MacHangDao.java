@@ -32,6 +32,8 @@ public interface MacHangDao extends Remote{
 
 	boolean deleteMatHang(MatHang matHang) throws RemoteException;
 
+	ArrayList<MatHang> getMHTheoHoaDon(String maHD) throws RemoteException;
+
 //	boolean themMatHang(String maMH, String tenMH, int soLuongMH, double giaMH) throws RemoteException;
 
 }

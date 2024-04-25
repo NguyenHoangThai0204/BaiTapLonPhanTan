@@ -47,6 +47,15 @@ public class MatHangImpl extends UnicastRemoteObject implements MacHangDao {
 	}
 
 	@Override
+	public ArrayList<MatHang> getMHTheoHoaDon(String maHD) throws RemoteException {
+		TypedQuery<MatHang> query = entityManager.createQuery(
+				"SELECT mh FROM MatHang mh JOIN ChiTietHD cthd ON mh.maMH = cthd.matHang.maMH WHERE cthd.hoaDon.maHoaDon = :maHD",
+				MatHang.class);
+		query.setParameter("maHD", maHD);
+		return (ArrayList<MatHang>) query.getResultList();
+	}
+
+	@Override
 	public ArrayList<MatHang> getAllMatHangs() throws RemoteException {
 		TypedQuery<MatHang> query = entityManager.createQuery("SELECT mh FROM MatHang mh", MatHang.class);
 		return (ArrayList<MatHang>) query.getResultList();
@@ -121,5 +130,3 @@ public class MatHangImpl extends UnicastRemoteObject implements MacHangDao {
 	}
 
 }
-
-

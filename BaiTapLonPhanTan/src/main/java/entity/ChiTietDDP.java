@@ -26,6 +26,13 @@ public class ChiTietDDP implements Serializable {
     @ManyToOne @JoinColumn(name = "maMH", insertable = false, updatable = false)
     private MatHang matHang;
 
+    public ChiTietDDP(DonDatPhong ddp, int soLuongMH, MatHang mh) {
+        super();
+        this.donDatPhong = ddp;
+        this.soLuongMH = soLuongMH;
+        this.matHang = mh;
+    }
+
     public DonDatPhong getDonDatPhong() {
         return donDatPhong;
     }
@@ -58,7 +65,21 @@ public class ChiTietDDP implements Serializable {
         super();
     }
 
+    public ChiTietDDPId getId() {
+        return id;
+    }
 
+    public void setId(ChiTietDDPId id) {
+        this.id = id;
+    }
+
+    public MatHang getMatHang() {
+        return matHang;
+    }
+
+    public void setMatHang(MatHang matHang) {
+        this.matHang = matHang;
+    }
 
     @Override
     public String toString() {
