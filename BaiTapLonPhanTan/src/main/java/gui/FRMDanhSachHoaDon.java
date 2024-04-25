@@ -4,20 +4,32 @@
  */
 package gui;
 
+import dao.HoaDonDao;
+import entity.HoaDon;
+import entity.MatHang;
+import impl.HoaDonImpl;
+
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.Toolkit;
-import java.awt.event.WindowEvent;
+import java.awt.event.*;
 import java.rmi.RemoteException;
+import java.util.ArrayList;
+
+import static gui.FRMQuanLiMatHang.matHangDao;
 
 /**
  *
  * @author Asus
  */
-public class FRMDanhSachHoaDon extends javax.swing.JFrame {
+public class FRMDanhSachHoaDon extends javax.swing.JFrame  implements ActionListener, MouseListener, FocusListener, KeyListener {
+
+    private DefaultTableModel modalMH;
 
     /**
      * Creates new form FRMDanhSachHoaDon
      */
-    public FRMDanhSachHoaDon() {
+    public FRMDanhSachHoaDon() throws RemoteException {
         initComponents();
         setLocationRelativeTo(null);
     }
@@ -29,7 +41,7 @@ public class FRMDanhSachHoaDon extends javax.swing.JFrame {
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents() {
+    private void initComponents() throws RemoteException {
 
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -77,18 +89,25 @@ public class FRMDanhSachHoaDon extends javax.swing.JFrame {
 
         jButLamMoi.setIcon(new javax.swing.ImageIcon("D:\\PhatTrienUngDung\\baiTapLonCKPTUD\\baiTapLonCKPTUD\\iCon\\refresh.png")); // NOI18N
 
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
-            },
-            new String [] {
-                "Mã hoá đơn", "Mã khách hàng", "Tên khách hàng", "Mã nhân viên", "Tên nhân viên", "Ngày lập"
-            }
-        ));
+//        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+//            new Object [][] {
+//                {null, null, null, null, null, null},
+//                {null, null, null, null, null, null},
+//                {null, null, null, null, null, null},
+//                {null, null, null, null, null, null}
+//            },
+//            new String [] {
+//                "Mã hoá đơn", "Mã khách hàng", "Tên khách hàng", "Mã nhân viên", "Tên nhân viên", "Ngày lập"
+//            }
+//        ));
         jScrollPane2.setViewportView(jTable2);
+        String col2[]=  {
+                "Mã hoá đơn", "Mã khách hàng", "Tên khách hàng", "Mã nhân viên", "Tên nhân viên", "Ngày lập"
+            };
+        DefaultTableModel modalHD = new DefaultTableModel(col2, 0);
+        jTable2.setModel(modalHD);
+        jScrollPane2.setViewportView(jTable2);
+        loadDSHoaDon();
 
         jButQuayLai.setIcon(new javax.swing.ImageIcon("D:\\PhatTrienUngDung\\baiTapLonCKPTUD\\baiTapLonCKPTUD\\iCon\\undo.png")); // NOI18N
         jButQuayLai.addActionListener(new java.awt.event.ActionListener() {
@@ -101,18 +120,22 @@ public class FRMDanhSachHoaDon extends javax.swing.JFrame {
             }
         });
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null}
-            },
-            new String [] {
-                "Mã mặt hàng", "Tên mặt hàng", "Loại mặt hàng", "Số lượng", "Đơn giá", "Phụ thu", "Thành tiền"
-            }
-        ));
+
+//        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+//            new String [] {
+//                "Mã mặt hàng", "Tên mặt hàng", "Loại mặt hàng", "Số lượng", "Đơn giá", "Phụ thu", "Thành tiền"
+//            }, 0
+//        ));
         jScrollPane1.setViewportView(jTable1);
+        String col[]=  {
+                "Mã mặt hàng", "Tên mặt hàng", "Loại mặt hàng", "Số lượng", "Đơn giá", "Phụ thu", "Thành tiền"
+            };
+        modalMH = new DefaultTableModel(col, 0);
+        jTable1.setModel(modalMH);
+        jScrollPane1.setViewportView(jTable1);
+
+
+
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel3.setText("Phòng:");
@@ -318,6 +341,47 @@ public class FRMDanhSachHoaDon extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void loadDSMH(String maHoaDon) throws RemoteException {
+        removeDanhSachMH(modalMH);
+        ArrayList<MatHang> matHangs = matHangDao.getMHTheoHoaDon(maHoaDon);
+        for (MatHang matHang : matHangs) {
+            modalMH.addRow(new Object[]{
+                    matHang.getMaMatHang(),
+                    matHang.getTenMatHang(),
+                    matHang.getLoaiMatHang(),
+                    matHang.getSoLuongMatHang(),
+                    matHang.getGiaMatHang(),
+                    "0",
+                    matHang.getGiaMatHang()*matHang.getSoLuongMatHang()
+            });
+        }
+
+    }
+
+    private void loadDSHoaDon() throws RemoteException {
+        HoaDonDao hoaDonDao = new HoaDonImpl();
+        ArrayList<HoaDon> hoaDons = hoaDonDao.getAllHoaDons();
+        DefaultTableModel defaultTableModel = (DefaultTableModel) jTable2.getModel();
+        for (HoaDon hoaDon : hoaDons) {
+            defaultTableModel.addRow(new Object[]{
+                    hoaDon.getMaHoaDon(),
+                    hoaDon.getKhachHang().getMaKhachHang(),
+                    hoaDon.getKhachHang().getTenKH(),
+                    hoaDon.getNhanVien().getMaNhanVien(),
+                    hoaDon.getNhanVien().getTenNhanVien(),
+                    hoaDon.getNgayLap()
+            });
+        }
+    }
+
+    private void removeDanhSachMH(DefaultTableModel defaultTableModel) {
+        while(jTable1.getRowCount() > 0){
+            modalMH.removeRow(0);
+        }
+    }
+
+
+
     private void jButQuayLaiActionPerformed(java.awt.event.ActionEvent evt) throws RemoteException {//GEN-FIRST:event_jButQuayLaiActionPerformed
          // TODO add your handling code here:
          setVisible(false);
@@ -327,6 +391,8 @@ public class FRMDanhSachHoaDon extends javax.swing.JFrame {
          quanLi.setVisible(true);
          this.setVisible(false);
     }//GEN-LAST:event_jButQuayLaiActionPerformed
+
+
 
     /**
      * @param args the command line arguments
@@ -358,7 +424,11 @@ public class FRMDanhSachHoaDon extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new FRMDanhSachHoaDon().setVisible(true);
+                try {
+                    new FRMDanhSachHoaDon().setVisible(true);
+                } catch (RemoteException e) {
+                    throw new RuntimeException(e);
+                }
             }
         });
     }
@@ -397,5 +467,76 @@ public class FRMDanhSachHoaDon extends javax.swing.JFrame {
     private javax.swing.JTextField jTextFieldTongTienThanhToan;
     private javax.swing.JTextField jTextFieldTrangThai;
     private javax.swing.JTextField jTextFieldTuNgay;
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+
+    }
+
+    @Override
+    public void focusGained(FocusEvent e) {
+
+    }
+
+    @Override
+    public void focusLost(FocusEvent e) {
+
+    }
+
+    @Override
+    public void keyTyped(KeyEvent e) {
+
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
+
+    }
+
+    @Override
+    public void mouseClicked(MouseEvent e) {
+        Object o = e.getSource();
+        if (o.equals(jTable2)) {
+            choose1HD();
+        }
+    }
+
+    private void choose1HD() {
+        int selectedRow = jTable2.getSelectedRow();
+        String maHoaDon =  (String)  jTable2.getValueAt(selectedRow, 0).toString();
+        try {
+            loadDSMH(maHoaDon);
+        } catch (RemoteException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
+
+    }
     // End of variables declaration//GEN-END:variables
+
+
+
 }

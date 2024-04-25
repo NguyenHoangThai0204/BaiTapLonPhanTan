@@ -15,6 +15,7 @@ import dao.NhanVienDao;
 import entity.NhanVien;
 import entity.TaiKhoan;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.NoResultException;
 import jakarta.persistence.Persistence;
 import jakarta.persistence.TypedQuery;
 
@@ -114,9 +115,20 @@ public class NhanVienImpl extends UnicastRemoteObject implements NhanVienDao {
 
     @Override
     public NhanVien getNVTheoTK(String maTK) throws RemoteException {
-        return (NhanVien) entityManager.createQuery("select nv from NhanVien nv where nv.taiKhoan.maTK = '" + maTK + "'").getSingleResult();
+        if (maTK == null) {
+            // handle the case where maTK is null, for example, return null or throw a custom exception
+            return null;
+        } else {
+            try {
+                return (NhanVien) entityManager.createQuery("select nv from NhanVien nv where nv.taiKhoan.maTK = :maTK", NhanVien.class)
+                        .setParameter("maTK", maTK)
+                        .getSingleResult();
+            } catch (NoResultException e) {
+                // handle the case where no result is found, for example, return null or throw a custom exception
+                return null;
+            }
+        }
     }
-
     @Override
     public ArrayList<NhanVien> sortMaNV(String kieuSapXep) throws RemoteException {
         String sapXep = "desc"; // mặc định sắp xếp giảm dần

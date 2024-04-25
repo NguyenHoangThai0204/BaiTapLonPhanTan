@@ -86,8 +86,13 @@ public class Test {
 //		 Persistence.createEntityManagerFactory("maria").createEntityManager();
 
 //		 -----------------TEST Thống kê trong HoaDon DAO ---------------------
-		 double doanhThu = hoaDonDao.tongDoanhThu(Date.valueOf(LocalDate.of(2020, 10, 11)), Date.valueOf(LocalDate.of(2024, 4, 25)));
-		 System.out.println("Tổng doanh thu từ 11/10/2020 đến 25/4/2024: "+doanhThu);
+//		 double doanhThu = hoaDonDao.tongDoanhThu(Date.valueOf(LocalDate.of(2020, 10, 11)), Date.valueOf(LocalDate.of(2024, 4, 25)));
+//		 System.out.println("Tổng doanh thu từ 11/10/2020 đến 25/4/2024: "+doanhThu);
+
+		ArrayList<MatHang> matHangs = matHangDao.getMHTheoHoaDon("HD001");
+		for (MatHang mh : matHangs) {
+			System.out.println(mh);
+		}
 //        -----------------TEST NHANVIEN DAO ---------------------
 
 		 

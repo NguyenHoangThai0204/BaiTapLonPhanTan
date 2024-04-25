@@ -50,6 +50,11 @@ public class HoaDonImpl extends UnicastRemoteObject implements HoaDonDao {
     }
 
     @Override
+    public ArrayList<HoaDon> getAllHoaDons() throws RemoteException {
+        return (ArrayList<HoaDon>) em.createQuery("SELECT hd FROM HoaDon hd").getResultList();
+    }
+
+    @Override
     public ArrayList<HoaDon> getHDTheoTenKH(String tenKH) throws RemoteException {
         return (ArrayList<HoaDon>) em.createQuery("SELECT hd FROM HoaDon hd INNER JOIN hd.khachHang kh WHERE kh.tenKH LIKE :tenKH")
                 .setParameter("tenKH", "%" + tenKH + "%")

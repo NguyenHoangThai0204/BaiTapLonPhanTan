@@ -101,7 +101,11 @@ public class FRMQuanLi extends javax.swing.JFrame{
         jButtonThanhToan.setText("Quản lí thanh toán ");
         jButtonThanhToan.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonThanhToanActionPerformed(evt);
+                try {
+                    jButtonThanhToanActionPerformed(evt);
+                } catch (RemoteException e) {
+                    throw new RuntimeException(e);
+                }
             }
         });
         jButtonThanhToan.setContentAreaFilled(false);
@@ -367,16 +371,16 @@ public class FRMQuanLi extends javax.swing.JFrame{
         jLayeredPane1.add(datPhong.getFRMDDP());
     }//GEN-LAST:event_jButtonDatPhongActionPerformed
 
-    private void jButtonThanhToanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonThanhToanActionPerformed
+    private void jButtonThanhToanActionPerformed(java.awt.event.ActionEvent evt) throws RemoteException {//GEN-FIRST:event_jButtonThanhToanActionPerformed
         // TODO add your handling code here:
         xoaMauButton();
         jLayeredPane1.removeAll();
         jButtonThanhToan.setBackground(new Color(255,0,255
         ));
         setTitle("Quản lí thanh toán");
-//        FRMThanhToan thanhToan = new FRMThanhToan(this,this.maTK);
-//        jButtonThanhToan.setForeground(Color.magenta);
-//        jLayeredPane1.add(thanhToan.getFRMThanhToan());
+        FRMThanhToan thanhToan = new FRMThanhToan(this.maTK);
+        jButtonThanhToan.setForeground(Color.magenta);
+        jLayeredPane1.add(thanhToan.getFRMThanhToan());
     }//GEN-LAST:event_jButtonThanhToanActionPerformed
 
     private void jButtonNhanVienActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNhanVienActionPerformed

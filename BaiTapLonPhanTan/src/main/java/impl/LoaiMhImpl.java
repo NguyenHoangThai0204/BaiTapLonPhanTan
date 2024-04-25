@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import dao.LoaiMhDao;
 import entity.LoaiMH;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.NoResultException;
 import jakarta.persistence.Persistence;
 
 public class LoaiMhImpl extends UnicastRemoteObject implements LoaiMhDao{
@@ -35,11 +36,16 @@ public class LoaiMhImpl extends UnicastRemoteObject implements LoaiMhDao{
 	public LoaiMH getLMHTheoMa(String ma) throws RemoteException {
 		return entityManager.find(LoaiMH.class, ma);
 	}
-	
+
 	@Override
 	public LoaiMH getLMHTheoTen(String ten) throws RemoteException {
-		return entityManager.createQuery("SELECT lmh FROM LoaiMH lmh WHERE lmh.tenLoaiMatHang = :ten", LoaiMH.class)
-				.setParameter("ten", ten).getSingleResult();
+		try {
+			return entityManager.createQuery("SELECT lmh FROM LoaiMH lmh WHERE lmh.tenLoaiMatHang = :ten", LoaiMH.class)
+					.setParameter("ten", ten).getSingleResult();
+		} catch (NoResultException e) {
+			// handle the case where no result is found, for example, return null or throw a custom exception
+			return null;
+		}
 	}
 	
 	
