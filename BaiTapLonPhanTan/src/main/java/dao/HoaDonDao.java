@@ -35,4 +35,5 @@ public interface HoaDonDao extends Remote {
     public long	 demSoKH(Date ngayBatDau,Date ngayKetThuc) throws RemoteException;
     public long demSoMH(Date ngayBatDau,Date ngayKetThuc) throws RemoteException;
     public long demSoLanKHDen(String maKH, Date ngayD, Date ngayKT) throws RemoteException;
+    public double tongDoanhThu(Date ngayBatDau, Date ngayKetThuc) throws RemoteException;
 }

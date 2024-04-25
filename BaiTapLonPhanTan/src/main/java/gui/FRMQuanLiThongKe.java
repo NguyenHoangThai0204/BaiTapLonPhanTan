@@ -277,14 +277,17 @@ import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Panel;
+import java.awt.event.ActionEvent;
+import java.rmi.RemoteException;
 import java.sql.Date;
 import java.time.LocalDate;
+import java.time.ZoneId;
 
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
-import javax.swing.JPanel;
+import javax.swing.*;
 
 import com.toedter.calendar.JDateChooser;
+import dao.HoaDonDao;
+import impl.HoaDonImpl;
 
 /**
  *
@@ -330,6 +333,26 @@ public class FRMQuanLiThongKe extends javax.swing.JFrame {
         iconTG = new javax.swing.JLabel();
         jLabelTG = new javax.swing.JLabel();
         jTextField4 = new javax.swing.JTextField();
+        chooserNgayBatDau = new JDateChooser();
+        chooserNgayBatDau.getCalendarButton().setPreferredSize(new Dimension(30, 24));
+        chooserNgayBatDau.setDateFormatString("dd/MM/yyyy");
+        chooserNgayBatDau.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        chooserNgayBatDau.setFont(new Font("SansSerif", Font.PLAIN, 15));
+        now = LocalDate.now();
+        ngay = now.getDayOfMonth();
+        thang = now.getMonthValue()-1;
+        nam = now.getYear()-1900;
+        dHienTai = new Date(nam,thang,ngay);
+        chooserNgayBatDau.setDate(dHienTai);
+
+        chooserNgayKetThuc = new JDateChooser();
+        chooserNgayKetThuc.getCalendarButton().setPreferredSize(new Dimension(30, 24));
+        chooserNgayKetThuc.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        chooserNgayKetThuc.getCalendarButton().setBackground(new Color(102, 0, 153));
+        chooserNgayKetThuc.setFont(new Font("SansSerif", Font.PLAIN, 15));
+        chooserNgayKetThuc.setDateFormatString("dd/MM/yyyy");
+        chooserNgayKetThuc.setDate(dHienTai);
+
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(1202, 422));
@@ -338,6 +361,7 @@ public class FRMQuanLiThongKe extends javax.swing.JFrame {
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 13)); // NOI18N
         jLabel1.setText("Đến ngày:");
+
 
         jbThongKe.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
         jbThongKe.setText("Thống kê");
@@ -367,9 +391,15 @@ public class FRMQuanLiThongKe extends javax.swing.JFrame {
         jTextField3.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         jTextField3.setText("0 VNĐ");
         jTextField3.setBorder(null);
-        jTextField3.addActionListener(new java.awt.event.ActionListener() {
+        jbThongKe.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField3ActionPerformed(evt);
+                jbThongKeActionPerformed(evt);
+            }
+        });
+
+        jbLamMoiTK.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbLamMoiTKActionPerformed(evt);
             }
         });
 
@@ -406,12 +436,13 @@ public class FRMQuanLiThongKe extends javax.swing.JFrame {
 
         jLabelTG.setFont(new java.awt.Font("Verdana", 1, 14)); // NOI18N
         jLabelTG.setForeground(new java.awt.Color(153, 0, 204));
-        jLabelTG.setText("THỜI GIAN HOẠT ĐỘNG PHÒNG");
+        jLabelTG.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabelTG.setText("TỔNG SỐ KHÁCH HÀNG      ");
 
         jTextField4.setBackground(new java.awt.Color(242, 242, 242));
         jTextField4.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jTextField4.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jTextField4.setText("0 HOURS");
+        jTextField4.setText("0 KHÁCH HÀNG");
         jTextField4.setBorder(null);
 
         javax.swing.GroupLayout jPanelThoiGianLayout = new javax.swing.GroupLayout(jPanelThoiGian);
@@ -455,11 +486,11 @@ public class FRMQuanLiThongKe extends javax.swing.JFrame {
                                                         .addGroup(jPanel1Layout.createSequentialGroup()
                                                                 .addComponent(jLabel2)
                                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                                .addComponent(chooserNgayBatDau, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE))
                                                         .addGroup(jPanel1Layout.createSequentialGroup()
                                                                 .addComponent(jLabel1)
                                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
-                                                                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                                                .addComponent(chooserNgayKetThuc, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE))))
                                         .addGroup(jPanel1Layout.createSequentialGroup()
                                                 .addGap(12, 12, 12)
                                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -483,11 +514,11 @@ public class FRMQuanLiThongKe extends javax.swing.JFrame {
                                         .addGroup(jPanel1Layout.createSequentialGroup()
                                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                                         .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                        .addComponent(chooserNgayBatDau, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                        .addComponent(chooserNgayKetThuc, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                                 .addComponent(jbThongKe)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -515,9 +546,38 @@ public class FRMQuanLiThongKe extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField3ActionPerformed
+    private void jbLamMoiTKActionPerformed(ActionEvent evt) {
+// TODO add your handling code here:
+        jTextField3.setText("0 VNĐ");
+        jTextField4.setText("0 KHÁCH HÀNG");
+        chooserNgayBatDau.setDate(dHienTai);
+        chooserNgayKetThuc.setDate(dHienTai);
+    }
+
+    private void jbThongKeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbThongKeActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField3ActionPerformed
+        try {
+            thongKe();
+        } catch (RemoteException ex) {
+            throw new RuntimeException(ex);
+        }
+    }//GEN-LAST:event_jbThongKeActionPerformed
+
+    private void thongKe() throws RemoteException{
+        java.util.Date ngayBatDau = chooserNgayBatDau.getDate();
+        java.util.Date ngayKetThuc = chooserNgayKetThuc.getDate();
+        //Thống kê doanh thu
+        hoaDonDao = new HoaDonImpl();
+        double doanhThu = hoaDonDao.tongDoanhThu(ngayBatDau, ngayKetThuc);
+        jTextField3.setText(doanhThu + " VNĐ");
+
+        long soKhachHang = hoaDonDao.demSoKH(ngayBatDau, ngayKetThuc);
+        jTextField4.setText(soKhachHang + " KHÁCH HÀNG");
+
+        //Thống kê thời gian hoạt động
+
+
+    }
 
     /**
      * @param args the command line arguments
@@ -579,5 +639,13 @@ public class FRMQuanLiThongKe extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField4;
     private javax.swing.JButton jbLamMoiTK;
     private javax.swing.JButton jbThongKe;
+    private JDateChooser chooserNgayBatDau;
+    private JDateChooser chooserNgayKetThuc;
+    private LocalDate now;
+    private int ngay;
+    private int thang;
+    private int nam;
+    private Date dHienTai;
+    private HoaDonDao hoaDonDao;
     // End of variables declaration//GEN-END:variables
 }

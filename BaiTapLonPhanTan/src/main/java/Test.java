@@ -82,9 +82,12 @@ public class Test {
 	}
 
 	public static void main(String[] args) throws RemoteException {
-		 EntityManager entityManager =
-		 Persistence.createEntityManagerFactory("maria").createEntityManager();
+//		 EntityManager entityManager =
+//		 Persistence.createEntityManagerFactory("maria").createEntityManager();
 
+//		 -----------------TEST Thống kê trong HoaDon DAO ---------------------
+		 double doanhThu = hoaDonDao.tongDoanhThu(Date.valueOf(LocalDate.of(2020, 10, 11)), Date.valueOf(LocalDate.of(2024, 4, 25)));
+		 System.out.println("Tổng doanh thu từ 11/10/2020 đến 25/4/2024: "+doanhThu);
 //        -----------------TEST NHANVIEN DAO ---------------------
 
 		 
@@ -196,12 +199,12 @@ public class Test {
 //            System.out.println(nv);
 //        }
 
-        boolean kq = nhanVienDao.checkSdtNV("0352465972");
-        if (kq) {
-            System.out.println("Số điện thoại chưa tồn tại");
-        } else {
-            System.out.println("Số điện thoại đã tồn tại");
-        }
+//        boolean kq = nhanVienDao.checkSdtNV("0352465972");
+//        if (kq) {
+//            System.out.println("Số điện thoại chưa tồn tại");
+//        } else {
+//            System.out.println("Số điện thoại đã tồn tại");
+//        }
 
 //        -----------------TEST HOADON DAO ---------------------
 

@@ -147,5 +147,19 @@ public class HoaDonImpl extends UnicastRemoteObject implements HoaDonDao {
                 .getSingleResult();
     }
 
+    @Override
+    public double tongDoanhThu(Date ngayBatDau, Date ngayKetThuc) throws RemoteException {
+        Double result = (Double) em.createQuery("SELECT SUM(ct.soLuong * ct.tongTien) from ChiTietHD ct inner join HoaDon hd on ct.hoaDon.maHoaDon = hd.maHoaDon WHERE hd.ngayLap BETWEEN :ngayBatDau AND :ngayKetThuc ")
+                .setParameter("ngayBatDau", ngayBatDau, TemporalType.DATE)
+                .setParameter("ngayKetThuc", ngayKetThuc, TemporalType.DATE)
+                .getSingleResult();
+        if (result != null) {
+            return result.doubleValue();
+        } else {
+            // handle the case where the result is null, for example, return a default value
+            return 0.0;
+        }
+    }
+
 
 }

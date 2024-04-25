@@ -19,7 +19,7 @@ public class ChiTietHD implements Serializable  {
 	@OneToOne @JoinColumn(name = "maHD", insertable = false, updatable = false)
 	private HoaDon hoaDon;
 
-	@Formula("soLuong * (SELECT giaMatHang FROM MatHang WHERE MaMH = maMH)")
+	@Formula("soLuong * (SELECT mh.GiaMH FROM MatHang mh WHERE mh.MaMH = maMH)")
 	private double tongTien;
 
 	public int getSoLuong() {
