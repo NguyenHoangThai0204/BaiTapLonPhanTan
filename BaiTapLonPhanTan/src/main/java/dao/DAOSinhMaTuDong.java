@@ -1,4 +1,4 @@
-package dao;
+                            package dao;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -102,6 +102,22 @@ public class DAOSinhMaTuDong {
         return ma;
     }
 
-
+    public String getMaPhong(){
+        String maPhong = "";
+        try {
+            entityManager.getTransaction().begin();
+            Query query = entityManager.createQuery(
+                    "SELECT CONCAT('P', RIGHT(CONCAT('000', COALESCE(CAST(SUBSTRING(p.maPhong, 2) AS int), 0) + 1), 3)) FROM Phong p WHERE p.maPhong LIKE 'P%'");
+            maPhong = (String) query.getSingleResult();
+            entityManager.getTransaction().commit();
+        }catch (NoResultException e) {
+            // Xử lý nếu không tìm thấy kết quả
+            maPhong = "P001"; // Giá trị mặc định nếu không tìm thấy kết quả
+            entityManager.getTransaction().rollback();
+        } finally {
+            entityManager.close();
+        }
+        return maPhong;
+    }
 
 }
