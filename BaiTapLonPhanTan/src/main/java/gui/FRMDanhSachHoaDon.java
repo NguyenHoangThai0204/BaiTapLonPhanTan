@@ -4,6 +4,7 @@
  */
 package gui;
 
+import com.toedter.calendar.JDateChooser;
 import dao.HoaDonDao;
 import entity.HoaDon;
 import entity.MatHang;
@@ -11,10 +12,14 @@ import impl.HoaDonImpl;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-import java.awt.Toolkit;
+import java.awt.*;
 import java.awt.event.*;
 import java.rmi.RemoteException;
+import java.sql.Date;
+import java.text.NumberFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Locale;
 
 import static gui.FRMQuanLiMatHang.matHangDao;
 
@@ -77,6 +82,7 @@ public class FRMDanhSachHoaDon extends javax.swing.JFrame  implements ActionList
         jLabel12 = new javax.swing.JLabel();
         jTextFieldTongTienThanhToan = new javax.swing.JTextField();
 
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
@@ -85,9 +91,9 @@ public class FRMDanhSachHoaDon extends javax.swing.JFrame  implements ActionList
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel2.setText("Tìm kiếm :");
 
-        jButTimKiem.setIcon(new javax.swing.ImageIcon("D:\\PhatTrienUngDung\\baiTapLonCKPTUD\\baiTapLonCKPTUD\\iCon\\search.png")); // NOI18N
+        jButTimKiem.setIcon(new javax.swing.ImageIcon("D:\\TAILIEUHOCTAP\\HK8\\LTphantanJava(420300214605)\\THUCHANH\\BAI_TAP_NHOM\\DoAnVer1_QLKaraoke_RMI\\BaiTapLonPhanTan\\BaiTapLonPhanTan\\iCon\\search.png")); // NOI18N
 
-        jButLamMoi.setIcon(new javax.swing.ImageIcon("D:\\PhatTrienUngDung\\baiTapLonCKPTUD\\baiTapLonCKPTUD\\iCon\\refresh.png")); // NOI18N
+        jButLamMoi.setIcon(new javax.swing.ImageIcon("D:\\TAILIEUHOCTAP\\HK8\\LTphantanJava(420300214605)\\THUCHANH\\BAI_TAP_NHOM\\DoAnVer1_QLKaraoke_RMI\\BaiTapLonPhanTan\\BaiTapLonPhanTan\\iCon\\refresh.png")); // NOI18N
 
 //        jTable2.setModel(new javax.swing.table.DefaultTableModel(
 //            new Object [][] {
@@ -109,7 +115,7 @@ public class FRMDanhSachHoaDon extends javax.swing.JFrame  implements ActionList
         jScrollPane2.setViewportView(jTable2);
         loadDSHoaDon();
 
-        jButQuayLai.setIcon(new javax.swing.ImageIcon("D:\\PhatTrienUngDung\\baiTapLonCKPTUD\\baiTapLonCKPTUD\\iCon\\undo.png")); // NOI18N
+        jButQuayLai.setIcon(new javax.swing.ImageIcon("D:\\TAILIEUHOCTAP\\HK8\\LTphantanJava(420300214605)\\THUCHANH\\BAI_TAP_NHOM\\DoAnVer1_QLKaraoke_RMI\\BaiTapLonPhanTan\\BaiTapLonPhanTan\\iCon\\undo.png")); // NOI18N
         jButQuayLai.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 try {
@@ -155,8 +161,28 @@ public class FRMDanhSachHoaDon extends javax.swing.JFrame  implements ActionList
         jLabel8.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel8.setText("Từ ngày");
 
+        chooserNgayBatDau = new JDateChooser();
+        chooserNgayBatDau.getCalendarButton().setPreferredSize(new Dimension(30, 24));
+        chooserNgayBatDau.setDateFormatString("dd/MM/yyyy");
+        chooserNgayBatDau.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        chooserNgayBatDau.setFont(new Font("SansSerif", Font.PLAIN, 15));
+        now = LocalDate.now();
+        ngay = now.getDayOfMonth();
+        thang = now.getMonthValue()-1;
+        nam = now.getYear()-1900;
+        dHienTai = new Date(nam,thang,ngay);
+        chooserNgayBatDau.setDate(dHienTai);
+
+        chooserNgayKetThuc = new JDateChooser();
+        chooserNgayKetThuc.getCalendarButton().setPreferredSize(new Dimension(30, 24));
+        chooserNgayKetThuc.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        chooserNgayKetThuc.getCalendarButton().setBackground(new Color(102, 0, 153));
+        chooserNgayKetThuc.setFont(new Font("SansSerif", Font.PLAIN, 15));
+        chooserNgayKetThuc.setDateFormatString("dd/MM/yyyy");
+        chooserNgayKetThuc.setDate(dHienTai);
+
         jButton1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jButton1.setIcon(new javax.swing.ImageIcon("D:\\PhatTrienUngDung\\baiTapLonCKPTUD\\baiTapLonCKPTUD\\iCon\\swatches.png")); // NOI18N
+        jButton1.setIcon(new javax.swing.ImageIcon("D:\\TAILIEUHOCTAP\\HK8\\LTphantanJava(420300214605)\\THUCHANH\\BAI_TAP_NHOM\\DoAnVer1_QLKaraoke_RMI\\BaiTapLonPhanTan\\BaiTapLonPhanTan\\iCon\\swatches.png")); // NOI18N
         jButton1.setText("Xem");
 
         jLabel9.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
@@ -189,11 +215,11 @@ public class FRMDanhSachHoaDon extends javax.swing.JFrame  implements ActionList
                         .addGap(99, 99, 99)
                         .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextFieldTuNgay, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(chooserNgayBatDau, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel7)
                         .addGap(18, 18, 18)
-                        .addComponent(jTextFieldDenNgay, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(chooserNgayKetThuc, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(26, 26, 26)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -277,9 +303,9 @@ public class FRMDanhSachHoaDon extends javax.swing.JFrame  implements ActionList
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                         .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jTextFieldTuNgay, javax.swing.GroupLayout.DEFAULT_SIZE, 41, Short.MAX_VALUE)
+                            .addComponent(chooserNgayBatDau, javax.swing.GroupLayout.DEFAULT_SIZE, 41, Short.MAX_VALUE)
                             .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addComponent(jTextFieldDenNgay, javax.swing.GroupLayout.Alignment.LEADING))
+                        .addComponent(chooserNgayKetThuc, javax.swing.GroupLayout.Alignment.LEADING))
                     .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButQuayLai, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -339,6 +365,8 @@ public class FRMDanhSachHoaDon extends javax.swing.JFrame  implements ActionList
         );
 
         pack();
+        jTable2.addMouseListener(this);
+
     }// </editor-fold>//GEN-END:initComponents
 
     private void loadDSMH(String maHoaDon) throws RemoteException {
@@ -467,6 +495,15 @@ public class FRMDanhSachHoaDon extends javax.swing.JFrame  implements ActionList
     private javax.swing.JTextField jTextFieldTongTienThanhToan;
     private javax.swing.JTextField jTextFieldTrangThai;
     private javax.swing.JTextField jTextFieldTuNgay;
+    private JDateChooser chooserNgayBatDau;
+    private JDateChooser chooserNgayKetThuc;
+    private LocalDate now;
+    private int ngay;
+    private int thang;
+    private int nam;
+    private Date dHienTai;
+    private double phuThu;
+
 
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -506,11 +543,42 @@ public class FRMDanhSachHoaDon extends javax.swing.JFrame  implements ActionList
         }
     }
 
+    private double tinhPhuThu(HoaDon hoaDon) {
+        if (hoaDon.getPhuThu().equalsIgnoreCase("Không") ){
+            return phuThu = 0;
+        }else if(hoaDon.getPhuThu().equalsIgnoreCase( "Ngày thường")){
+            return phuThu = 50000;
+        }else {
+            return phuThu = 100000;
+        }
+    }
+
+    private String formatMoney(double money) {
+        // Tạo một đối tượng NumberFormat cho định dạng tiền tệ
+        NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(new Locale("vi", "VN"));
+        return currencyFormat.format(money);
+    }
+
     private void choose1HD() {
         int selectedRow = jTable2.getSelectedRow();
         String maHoaDon =  (String)  jTable2.getValueAt(selectedRow, 0).toString();
         try {
             loadDSMH(maHoaDon);
+            HoaDon hoaDon = new HoaDonImpl().getHDTheoMa(maHoaDon);
+            jTextFieldPhong.setText(hoaDon.getPhong().getMaPhong());
+            jTextFieldGioVao.setText(hoaDon.getGioVao().toString());
+            jTextFieldGioRa.setText(hoaDon.getGioRa().toString());
+            jTextFieldTrangThai.setText(hoaDon.getTrangThaiHD());
+            phuThu = tinhPhuThu(hoaDon);
+
+            jTextFieldPhuThu.setText(hoaDon.getPhuThu() + ": " + formatMoney(phuThu));
+            jTextFieldGiaPhong.setText(formatMoney(hoaDon.getPhong().getGiaPhong()));
+            int thoiGian = hoaDon.getGioRa().getHours() - hoaDon.getGioVao().getHours();
+            jTextFieldThoiGian.setText(thoiGian +" giờ");
+            double money = hoaDon.getPhong().getGiaPhong()*thoiGian;
+            jTextFieldTienQuanThoiGian.setText(formatMoney(money));
+            double tongTien = money + phuThu;
+            jTextFieldTongTienThanhToan.setText(formatMoney(tongTien));
         } catch (RemoteException e) {
             throw new RuntimeException(e);
         }

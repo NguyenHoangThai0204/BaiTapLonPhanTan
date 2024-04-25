@@ -375,6 +375,7 @@ public class FRMQuanLi extends javax.swing.JFrame{
         // TODO add your handling code here:
         xoaMauButton();
         jLayeredPane1.removeAll();
+        System.out.println("maTK: "+this.maTK);
         jButtonThanhToan.setBackground(new Color(255,0,255
         ));
         setTitle("Quản lí thanh toán");

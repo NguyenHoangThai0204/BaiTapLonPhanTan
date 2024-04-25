@@ -36,6 +36,7 @@ import impl.*;
  */
 public class FRMThanhToan extends javax.swing.JFrame implements ActionListener {
 
+    private final String maTKNV;
     private FRMDanhSachHoaDon hoaDon;
     private FRMQuanLi quanLi;
     private LoaiMhDao daoLoaiMH;
@@ -55,7 +56,7 @@ public class FRMThanhToan extends javax.swing.JFrame implements ActionListener {
      */
     public FRMThanhToan(String maTK) throws RemoteException {
         initComponents();
-        this.maTK = maTK;
+        this.maTKNV = maTK;
     }
 
     public JPanel getFRMThanhToan() {
@@ -636,8 +637,7 @@ public class FRMThanhToan extends javax.swing.JFrame implements ActionListener {
         for(MatHang mh : lsMH) {
             jComboBoxTenMH.addItem(mh.getTenMatHang());
         }
-
-        jTMaNV.setText(daoNV.getNVTheoTK(maTK).getTenNhanVien());
+        jTMaNV.setText(maTK);
 
     }// </editor-fold>//GEN-END:initComponents
 

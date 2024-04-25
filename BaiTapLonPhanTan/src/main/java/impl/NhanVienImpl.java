@@ -115,19 +115,8 @@ public class NhanVienImpl extends UnicastRemoteObject implements NhanVienDao {
 
     @Override
     public NhanVien getNVTheoTK(String maTK) throws RemoteException {
-        if (maTK == null) {
-            // handle the case where maTK is null, for example, return null or throw a custom exception
-            return null;
-        } else {
-            try {
-                return (NhanVien) entityManager.createQuery("select nv from NhanVien nv where nv.taiKhoan.maTK = :maTK", NhanVien.class)
-                        .setParameter("maTK", maTK)
-                        .getSingleResult();
-            } catch (NoResultException e) {
-                // handle the case where no result is found, for example, return null or throw a custom exception
-                return null;
-            }
-        }
+        return (NhanVien) entityManager.createQuery("select nv from NhanVien nv where nv.taiKhoan.maTK = '" + maTK + "'").getSingleResult();
+
     }
     @Override
     public ArrayList<NhanVien> sortMaNV(String kieuSapXep) throws RemoteException {
