@@ -1,21 +1,20 @@
 package dao;
 
-import entity.LoaiPhong;
-
 import java.rmi.Remote;
 import java.rmi.RemoteException;
-import java.util.List;
+import java.util.ArrayList;
 
-public interface LoaiPhongDao extends Remote {
-    public List<LoaiPhong> getDanhSachLoaiPhong() throws RemoteException;
+import entity.LoaiPhong;
 
-    public LoaiPhong getLoaiPhongTheoMa(String ma) throws RemoteException;
+public interface LoaiPhongDao extends Remote{
 
-    public LoaiPhong getLoaiPhongTheoTen(String ten) throws RemoteException;
+    ArrayList<LoaiPhong> getDanhSachLoaiPhong() throws RemoteException;
 
-    public String getMaLoaiPhongTheoTen(String ten) throws RemoteException;
+    LoaiPhong getLoaiPhongTheoMa(String ma) throws RemoteException;
 
+    LoaiPhong getLoaiPhongTheoTen(String ten) throws RemoteException;
 
+    String getMaLoaiPhongTheoTen(String ten) throws RemoteException;
 
 
 }

@@ -11,9 +11,11 @@ import dao.LoaiPhongDao;
 import entity.LoaiPhong;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.Persistence;
+import jakarta.persistence.TypedQuery;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.ArrayList;
 import java.util.List;
 
 /*
@@ -31,29 +33,28 @@ public class LoaiPhongImpl extends UnicastRemoteObject implements LoaiPhongDao {
     }
 
     @Override
-    public List<LoaiPhong> getDanhSachLoaiPhong() throws RemoteException {
-        return em.createNamedQuery("LoaiPhong.getAllLoaiPhong", LoaiPhong.class)
-                .getResultList();
+    public ArrayList<LoaiPhong> getDanhSachLoaiPhong() throws RemoteException {
+        TypedQuery<LoaiPhong> query = em.createQuery("SELECT lp FROM LoaiPhong lp", LoaiPhong.class);
+        return (ArrayList<LoaiPhong>) query.getResultList();
     }
 
     @Override
     public LoaiPhong getLoaiPhongTheoMa(String ma) throws RemoteException {
-        return em.createNamedQuery("LoaiPhong.getLoaiPhongTheoMa", LoaiPhong.class)
-                .setParameter("ma", ma)
-                .getSingleResult();
+        return em.find(LoaiPhong.class, ma);
     }
 
     @Override
     public LoaiPhong getLoaiPhongTheoTen(String ten) throws RemoteException {
-        return em.createNamedQuery("LoaiPhong.getLoaiPhongTheoTen", LoaiPhong.class)
-                .setParameter("ten", ten)
-                .getSingleResult();
+        TypedQuery<LoaiPhong> query = em.createQuery("SELECT lp FROM LoaiPhong lp WHERE lp.tenLoaiPhong = :ten", LoaiPhong.class);
+        query.setParameter("ten", ten);
+        return query.getSingleResult();
     }
 
     @Override
     public String getMaLoaiPhongTheoTen(String ten) throws RemoteException {
-        return em.createNamedQuery("LoaiPhong.getMaLoaiPTheoTen", String.class)
-                .setParameter("ten", ten)
-                .getSingleResult();
+        TypedQuery<LoaiPhong> query = em.createQuery("SELECT lp FROM LoaiPhong lp WHERE lp.tenLoaiPhong = :ten",
+                LoaiPhong.class);
+        query.setParameter("ten", ten);
+        return query.getSingleResult().getMaLoaiPhong();
     }
 }

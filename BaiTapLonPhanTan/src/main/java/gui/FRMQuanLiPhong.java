@@ -49,8 +49,7 @@ public class FRMQuanLiPhong extends javax.swing.JFrame implements MouseListener,
 
     private void initComponents() throws RemoteException {
         // Code here
-        PhongDao phongDao;
-        LoaiPhongDao loaiPhongDao;
+
         regex = new Regex();
         daoMa = new DAOSinhMaTuDong();
 
@@ -142,31 +141,6 @@ public class FRMQuanLiPhong extends javax.swing.JFrame implements MouseListener,
         btnGr.add(jRadioButton4);
         btnGr.add(jRadioButton6);
 
-//        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-//            new Object [][] {
-//                {null, null, null, null, null, null, null, null},
-//                {null, null, null, null, null, null, null, null},
-//                {null, null, null, null, null, null, null, null},
-//                {null, null, null, null, null, null, null, null},
-//                {null, null, null, null, null, null, null, null},
-//                {null, null, null, null, null, null, null, null},
-//                {null, null, null, null, null, null, null, null},
-//                {null, null, null, null, null, null, null, null},
-//                {null, null, null, null, null, null, null, null},
-//                {null, null, null, null, null, null, null, null},
-//                {null, null, null, null, null, null, null, null},
-//                {null, null, null, null, null, null, null, null},
-//                {null, null, null, null, null, null, null, null},
-//                {null, null, null, null, null, null, null, null},
-//                {null, null, null, null, null, null, null, null},
-//                {null, null, null, null, null, null, null, null},
-//                {null, null, null, null, null, null, null, null},
-//                {null, null, null, null, null, null, null, null}
-//            },
-//            new String [] {
-//                "Mã NV", "Họ tên", "SĐT", "Địa chỉ", "CCCD", "Ngày sinh", "Giới tính", "Loại khách hàng"
-//            }
-//        ));
         String phong[] = {"Mã phòng", "Loại phòng", "Giá phòng", "Tình trạng phòng", "Sức Chứa", "Mô Tả"};
         modelPhong = new DefaultTableModel(phong, 0);
         jTable1 = new JTable(modelPhong);
@@ -237,7 +211,12 @@ public class FRMQuanLiPhong extends javax.swing.JFrame implements MouseListener,
         jLabel12.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel12.setText("Loại phòng");
 
-        jcboChucVu.setModel(new javax.swing.DefaultComboBoxModel<>(new String[]{"Phòng thường", "Phòng trung", "Phòng Vip"}));
+        //jcboChucVu.setModel(new javax.swing.DefaultComboBoxModel<>(new String[]{"Phòng thường", "Phòng trung", "Phòng Vip"}));
+
+        ArrayList<LoaiPhong> lstLoaiPhong = loaiPhongDao.getDanhSachLoaiPhong();
+        for (LoaiPhong lp : lstLoaiPhong) {
+            jcboChucVu.addItem(lp.getTenLoaiPhong());
+        }
 
         txtMaPhong.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -445,18 +424,22 @@ public class FRMQuanLiPhong extends javax.swing.JFrame implements MouseListener,
 
     public void loadDanhSachPhong() throws RemoteException {
 
-        List<Phong> lsP = phongDao.getDanhSachPhong();
+        ArrayList<Phong> lsP = (ArrayList<Phong>) phongDao.getDanhSachPhong();
+
         for (Phong p : lsP) {
             LoaiPhong loaiP = loaiPhongDao.getLoaiPhongTheoMa(p.getLoaiPhong().getMaLoaiPhong());
             modelPhong.addRow(new Object[]{p.getMaPhong(), loaiP.getTenLoaiPhong(), dfGiaP.format(p.getGiaPhong()), p.getTinhTrangPhong(), p.getSucChua(), p.getMoTa()});
+            modelPhong.fireTableDataChanged();
+            System.out.println(p);
         }
     }
 
-    private void loadDanhSachPhong(List<Phong> lstP) throws RemoteException {
-        clearTable();
+    private void loadDanhSachPhong(ArrayList<Phong> lstP) throws RemoteException {
+        LoaiPhong loaiP = new LoaiPhong();
         for (Phong p : lstP) {
-            LoaiPhong loaiP = loaiPhongDao.getLoaiPhongTheoMa(p.getLoaiPhong().getMaLoaiPhong());
+            loaiP = loaiPhongDao.getLoaiPhongTheoMa(p.getLoaiPhong().getMaLoaiPhong());
             modelPhong.addRow(new Object[]{p.getMaPhong(), loaiP.getTenLoaiPhong(), dfGiaP.format(p.getGiaPhong()), p.getTinhTrangPhong(), p.getSucChua(), p.getMoTa()});
+            modelPhong.fireTableDataChanged();
         }
     }
 
@@ -498,10 +481,10 @@ public class FRMQuanLiPhong extends javax.swing.JFrame implements MouseListener,
             int sucChua = Integer.parseInt(txtSucChua.getText());
             String moTa = txtMoTa.getText();
             Phong p = new Phong(maP, tinhTrang, giaP, loaiP, sucChua, moTa);
-            System.out.println("phong"+p);
             phongDao.themPhong(p);
             clearTable();
-            loadPhongDuocChon(p);
+            reset();
+            loadDanhSachPhong();
             JOptionPane.showMessageDialog(this, "Thêm phòng thành công");
         }
     }
@@ -531,7 +514,7 @@ public class FRMQuanLiPhong extends javax.swing.JFrame implements MouseListener,
 
     public void loadPhongDuocChon(Phong p) throws RemoteException {
         LoaiPhong loaiP = loaiPhongDao.getLoaiPhongTheoMa(p.getLoaiPhong().getMaLoaiPhong());
-        modelPhong.addRow(new Object[]{p.getMaPhong(), loaiP.getTenLoaiPhong(), dfGiaP.format(p.getGiaPhong()), p.getTinhTrangPhong(), p.getTinhTrangPhong(), p.getSucChua(), p.getMoTa()});
+        modelPhong.addRow(new Object[]{p.getMaPhong(), loaiP.getTenLoaiPhong(), dfGiaP.format(p.getGiaPhong()), p.getTinhTrangPhong(), p.getSucChua(), p.getMoTa()});
     }
 
     private void loadDanhSachPhongTheoLoai(List<Phong> p2) throws RemoteException {
@@ -584,7 +567,7 @@ public class FRMQuanLiPhong extends javax.swing.JFrame implements MouseListener,
                 }
                 if (lstP.size() == 0) {
                     JOptionPane.showMessageDialog(this, "Không tìm thấy thông tin tìm kiếm phù hợp!");
-                    loadDanhSachPhong(lstP);
+                    loadDanhSachPhong();
                 }
             }
         } else {
@@ -595,6 +578,7 @@ public class FRMQuanLiPhong extends javax.swing.JFrame implements MouseListener,
     }
 
     //Sua thong tin phong
+
     public void suaThongTin() throws RemoteException {
         int row = jTable1.getSelectedRow();
         if (row >= 0) {
@@ -607,26 +591,24 @@ public class FRMQuanLiPhong extends javax.swing.JFrame implements MouseListener,
                 txtTam.setText(String.valueOf(Math.round(gia)));
                 if (regex.regexGiaP(txtTam)) {
                     try {
-
-                        LoaiPhong loaiP = new LoaiPhong(loaiPhongDao.getMaLoaiPhongTheoTen(jcboChucVu.getSelectedItem().toString()));
-                        System.out.println("Loai P" + loaiP);
-                        double giaP = Double.parseDouble(txtGiaPhong.getText().toString());
-                        System.out.println("Gia P" + giaP);
+                        String maPhong = txtMaPhong.getText();
                         String tinhTrang = txtTinhTrang.getText();
-                        System.out.println("tTR"+ tinhTrang);
-                        int sucChua = Integer.parseInt(txtSucChua.getText());
+                        float giaP = Float.parseFloat(txtGiaPhong.getText());
                         String moTa = txtMoTa.getText();
-                        Phong p = new Phong(maP, tinhTrang, giaP, loaiP, sucChua, moTa);
-                        System.out.println("Phong" + p);
+                        int sucChua = Integer.parseInt(txtSucChua.getText());
+                        String maLoaiPhong = loaiPhongDao.getMaLoaiPhongTheoTen(jcboChucVu.getSelectedItem().toString());
+                        LoaiPhong loaiPhong = new LoaiPhong(maLoaiPhong);
+                        Phong phong = new Phong(maPhong, tinhTrang, giaP, loaiPhong, sucChua, moTa);
+                        phongDao.capNhatPhong(phong);
+                        JOptionPane.showMessageDialog(this, "Cập nhật thông tin phòng thành công");
                         clearTable();
-                        phongDao.capNhatPhong(p);
-                        loadPhongDuocChon(p);
-                        JOptionPane.showMessageDialog(this, "Thông tin phòng đã được sửa!", "Thông báo",
-                                JOptionPane.OK_OPTION);
-                    } catch (Exception e) {
-                        JOptionPane.showMessageDialog(null, "Vui lòng kiểm tra lại giá phòng!!", "Thông báo",
-                                JOptionPane.ERROR_MESSAGE);
+                        loadDanhSachPhong();
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                        JOptionPane.showMessageDialog(this, "Có lỗi xảy ra khi cập nhật thông tin phòng");
                     }
+                } else {
+                    JOptionPane.showMessageDialog(this, "Giá phòng không hợp lệ");
                 }
             }
         } else {
@@ -735,6 +717,8 @@ public class FRMQuanLiPhong extends javax.swing.JFrame implements MouseListener,
         if (o.equals(btnXoaNV)) {
             try {
                 xoaPhong();
+                clearTable();
+                loadDanhSachPhong();
             } catch (RemoteException ex) {
                 throw new RuntimeException(ex);
             }
@@ -749,6 +733,8 @@ public class FRMQuanLiPhong extends javax.swing.JFrame implements MouseListener,
         if (o.equals(btnThemNV)) {
             try {
                 themPhong();
+                clearTable();
+                loadDanhSachPhong();
             } catch (RemoteException ex) {
                 throw new RuntimeException(ex);
             }
@@ -778,6 +764,8 @@ public class FRMQuanLiPhong extends javax.swing.JFrame implements MouseListener,
         if (o.equals(btnSuaNV)) {
             try {
                 suaThongTin();
+                clearTable();
+                loadDanhSachPhong();
             } catch (RemoteException ex) {
                 throw new RuntimeException(ex);
             }

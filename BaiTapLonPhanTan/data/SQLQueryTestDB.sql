@@ -5,7 +5,9 @@ INSERT [dbo].[TaiKhoan] ([maTK], [matKhau]) VALUES (N'NV001', N'NV001')
 
 INSERT [dbo].[NhanVien] ([maNhanVien], [maTK], [tenNhanVien], [chucVu], [gioiTinh], [ngaySinh], [diaChi], [sdt], [cccd], [luong], [caLamViec], [trangThaiLamViec]) VALUES (N'NV001', N'NV001', N'Ph?m V? Ho�i An', N'Ph?c v?', N'N?', CAST(N'2000-04-20' AS Date), N'60 Th?ng Nh?t, p10, Q.G� V?p', N'0966105479', '079001013302', 5000000, N'1', N'?ang l�m vi?c')
 
-INSERT [dbo].[LoaiPhong] ([maLoaiPhong], [tenLoaiPhong]) VALUES (N'LP001', N'Ph�ng th??ng')
+INSERT [dbo].[LoaiPhong] ([maLoaiPhong], [tenLoaiPhong]) VALUES (N'LP001', N'Phòng thường')
+INSERT [dbo].[LoaiPhong] ([maLoaiPhong], [tenLoaiPhong]) VALUES (N'LP002', N'Phòng trung')
+INSERT [dbo].[LoaiPhong] ([maLoaiPhong], [tenLoaiPhong]) VALUES (N'LP003', N'Phòng VIP')
 
 INSERT [dbo].[Phong] ([maPhong], [maLoaiPhong], [tinhTrangPhong], [giaPhong], [sucChua],[moTa]) VALUES (N'P001', N'LP001', N'Tr?ng', 100000,12,N'C? ?i?n')
 

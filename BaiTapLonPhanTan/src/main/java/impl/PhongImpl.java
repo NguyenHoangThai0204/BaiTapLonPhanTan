@@ -17,6 +17,7 @@ import jakarta.persistence.TypedQuery;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -133,21 +134,27 @@ public class PhongImpl extends UnicastRemoteObject implements PhongDao {
     }
 
     @Override
-    public List<Phong> getPhongTheoLoai(String maLoaiPhong) throws RemoteException {
-        return em.createQuery("SELECT p FROM Phong p WHERE p.loaiPhong.maLoaiPhong = :maLoaiPhong", Phong.class)
+    public ArrayList<Phong> getPhongTheoLoai(String maLoaiPhong) throws RemoteException {
+        return (ArrayList<Phong>) em.createQuery("SELECT p FROM Phong p WHERE p.loaiPhong.maLoaiPhong = :maLoaiPhong", Phong.class)
                 .setParameter("maLoaiPhong", maLoaiPhong)
                 .getResultList();
     }
 
     @Override
-    public List<Phong> getPhongThuongTrong() throws RemoteException {
-        return em.createQuery("SELECT p FROM Phong p WHERE p.loaiPhong.maLoaiPhong = 'LP001' AND p.tinhTrangPhong = 'Trống'", Phong.class)
+    public ArrayList<Phong> getPhongThuongTrong() throws RemoteException {
+        return (ArrayList<Phong>) em.createQuery("SELECT p FROM Phong p WHERE p.loaiPhong.maLoaiPhong = 'LP001' AND p.tinhTrangPhong = 'Trống'", Phong.class)
                 .getResultList();
     }
 
     @Override
-    public List<Phong> getPhongVipTrong() throws RemoteException {
-        return em.createQuery("SELECT p FROM Phong p WHERE p.loaiPhong.maLoaiPhong = 'LP003' AND p.tinhTrangPhong = 'Trống'", Phong.class)
+    public ArrayList<Phong> getPhongVipTrong() throws RemoteException {
+        return (ArrayList<Phong>) em.createQuery("SELECT p FROM Phong p WHERE p.loaiPhong.maLoaiPhong = 'LP003' AND p.tinhTrangPhong = 'Trống'", Phong.class)
+                .getResultList();
+    }
+
+    @Override
+    public List<Phong> getPhongTrungTrong() throws RemoteException {
+        return em.createQuery("SELECT p FROM Phong p WHERE p.loaiPhong.maLoaiPhong = 'LP002' AND p.tinhTrangPhong = 'Trống'", Phong.class)
                 .getResultList();
     }
 

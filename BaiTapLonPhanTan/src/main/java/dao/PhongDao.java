@@ -4,6 +4,7 @@ import entity.Phong;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -32,11 +33,13 @@ public interface PhongDao extends Remote {
 
     public Phong getGiaPhongTheoMa(String ma) throws RemoteException;
 
-    public List<Phong> getPhongTheoLoai(String maLoaiPhong) throws RemoteException;
+    public ArrayList<Phong> getPhongTheoLoai(String maLoaiPhong) throws RemoteException;
 
-    public List<Phong> getPhongThuongTrong() throws RemoteException;
+    public ArrayList<Phong> getPhongThuongTrong() throws RemoteException;
 
-    public List<Phong> getPhongVipTrong() throws RemoteException;
+    public ArrayList<Phong> getPhongVipTrong() throws RemoteException;
+
+    public List<Phong> getPhongTrungTrong() throws RemoteException;
 
     public List<Phong> sortTheoGiaPhong(String kieuSapXep) throws RemoteException;
 

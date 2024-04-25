@@ -21,8 +21,9 @@ import java.util.List;
 
 public interface LoaiKHDao extends Remote {
 
-    public List<LoaiKH> getAllLoaiKH() throws RemoteException;
+    public ArrayList<LoaiKH> getAllLoaiKH() throws RemoteException;
     public LoaiKH getLoaiKHTheoMaLoai(String ma) throws RemoteException;
     public LoaiKH getMaLoaiKHTheoTen(String ten) throws RemoteException;
+
 
 }

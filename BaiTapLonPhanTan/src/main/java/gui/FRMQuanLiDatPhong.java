@@ -126,8 +126,7 @@ public class FRMQuanLiDatPhong extends javax.swing.JFrame implements ActionListe
 		jLabel4.setText("SĐT:");
 
 		jComboBoxLoaiKH.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-		jComboBoxLoaiKH.setModel(new javax.swing.DefaultComboBoxModel<>(
-				new String[]{"Khách hàng thường", "Thành viên thường", "Thành viên VIP"}));
+		jComboBoxLoaiKH.setPreferredSize(new Dimension(200, 30));
 
 		jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
 		jLabel5.setText("Tên nhân viên:");
@@ -156,10 +155,16 @@ public class FRMQuanLiDatPhong extends javax.swing.JFrame implements ActionListe
 		jLabel9.setText("Trạng thái DDP:");
 
 		jComboBoxTrangThaiPhong.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-		jComboBoxTrangThaiPhong.setModel(new javax.swing.DefaultComboBoxModel<>(new String[]{"Thường", "VIP"}));
+
+		//jComboBoxTrangThaiPhong.setModel(new javax.swing.DefaultComboBoxModel<>(new String[]{"Thường", "VIP"}));
+
+		ArrayList<LoaiPhong> dsLoaiPhong = loaiPhongDao.getDanhSachLoaiPhong();
+		for (LoaiPhong lp : dsLoaiPhong) {
+			jComboBoxTrangThaiPhong.addItem(lp.getTenLoaiPhong());
+		}
+
 
 		txtTenKH.setToolTipText("loaiKH");
-
 
 		jLabel11.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
 		jLabel11.setText("Loại phòng:");
@@ -345,19 +350,6 @@ public class FRMQuanLiDatPhong extends javax.swing.JFrame implements ActionListe
 												javax.swing.GroupLayout.PREFERRED_SIZE))
 						.addContainerGap()));
 
-		// TABLE TABLE TABLE TABLE TABLE TABLE TABLE TABLE TABLE TABLE TABLE TABLE TABLE
-		// TABLE TABLE TABLE TABLE
-		// String colDDP[] = { "Mã DDP", "Tên khách hàng", "Mã phòng", "Loại phòng",
-		// "SĐT", "Giờ đến", "Ngày đến",
-		// "Tên nhân viên", "Ngày lập", "Trạng thái" };
-		// modelDDP = new DefaultTableModel(colDDP, 0);
-		// jTable1 = new JTable(modelDDP);
-		// jTable1.setDefaultEditor(Object.class, null);
-		// jTable1.setToolTipText("");
-		// jScrollPane1.setViewportView(jTable1);
-		// if (jTable1.getColumnModel().getColumnCount() > 0) {
-		// jTable1.getColumnModel().getColumn(0).setResizable(false);
-		// }
 
 		jLabel12.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
 		jLabel12.setText("Thông tin đơn:");
@@ -600,12 +592,14 @@ public class FRMQuanLiDatPhong extends javax.swing.JFrame implements ActionListe
 			jTable1.getColumnModel().getColumn(0).setResizable(false);
 		}
 		List<Phong> dsPhong;
-		if (jComboBoxTrangThaiPhong.getSelectedItem().toString().matches("VIP")) {// load phong vip
+		if (jComboBoxTrangThaiPhong.getSelectedItem().toString().matches("Phòng VIP")) {// load phong vip
 			dsPhong = phongDao.getPhongVipTrong();
 
-		} else {
-			dsPhong = phongDao.getPhongThuongTrong();
+		} else if (jComboBoxTrangThaiPhong.getSelectedItem().toString().matches("Phòng trung")) {// load phong vip
+			dsPhong = phongDao.getPhongTrungTrong();
 
+		} else {// load phong thường
+			dsPhong = phongDao.getPhongThuongTrong();
 		}
 		if (dsPhong != null) {
 			for (Phong p : dsPhong)
@@ -1015,17 +1009,16 @@ public class FRMQuanLiDatPhong extends javax.swing.JFrame implements ActionListe
 	public void keyPressed(KeyEvent e) {
 
 	}
-
 	@Override
 	public void keyReleased(KeyEvent e) {
 		Object o = e.getSource();
 		if (o.equals(txtSDTKH) && txtSDTKH.getText().matches("[0-9]{10}")) {
 			try {
 				txtTenKH.setText(khachHangDao.getKHTheoSDT(txtSDTKH.getText()).getTenKH());
+				jComboBoxLoaiKH.addItem(khachHangDao.getKHTheoSDT(txtSDTKH.getText()).getLoaiKH().getTenLoaiKH().toString());
 			} catch (RemoteException ex) {
 				throw new RuntimeException(ex);
 			}
-//            System.out.println(khachHangDao.getKHTheoSDT(txtSDTKH.getText()).getTenKH());
 
 		}
 	}

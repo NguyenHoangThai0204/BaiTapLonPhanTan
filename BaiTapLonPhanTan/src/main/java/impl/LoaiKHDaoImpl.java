@@ -29,8 +29,8 @@ public class LoaiKHDaoImpl extends UnicastRemoteObject implements LoaiKHDao{
     }
 
     @Override
-    public List<LoaiKH> getAllLoaiKH() throws RemoteException {
-        return entityManager.createQuery("select lk from LoaiKH lk", LoaiKH.class).getResultList();
+    public ArrayList<LoaiKH> getAllLoaiKH() throws RemoteException {
+        return (ArrayList<LoaiKH>) entityManager.createQuery("select lk from LoaiKH lk", LoaiKH.class).getResultList();
 
     }
 
