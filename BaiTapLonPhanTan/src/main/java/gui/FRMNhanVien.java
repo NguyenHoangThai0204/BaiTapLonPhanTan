@@ -1040,14 +1040,15 @@ public class FRMNhanVien extends JFrame implements ActionListener, MouseListener
 						nv.setCaLamViec(caLamViec);
                         nv.setTrangThaiLamViec("Đang làm việc");
 
-						new NhanVienImpl().capNhatNV(nv, maNV);
+                        resetAll();
+                        nhanVienDao.capNhatNV(nv, maNV);
 
-						removeDanhSachNV(modelNV);
-						modelNV.setRowCount(0);
-						modelNV.addRow(new Object[] {
-								nv.getMaNhanVien(), nv.getTenNhanVien(), nv.getSdt(), nv.getDiaChi(),
-								 nv.getCccd(), dfNgaySinh.format(nv.getNgaySinh()), nv.getGioiTinh(), nv.getChucVu()
-						});
+//						modelNV.setRowCount(0);
+//						modelNV.addRow(new Object[] {
+//								nv.getMaNhanVien(), nv.getTenNhanVien(), nv.getSdt(), nv.getDiaChi(),
+//								 nv.getCccd(), dfNgaySinh.format(nv.getNgaySinh()), nv.getGioiTinh(), nv.getChucVu()
+//						});
+                        loadDanhSachNV();
 						JOptionPane.showMessageDialog(this, "Thông tin nhân viên đã được sửa!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
 					}
 				}catch (RemoteException e) {

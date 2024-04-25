@@ -176,9 +176,9 @@ public class FRMQuanLiPhong extends javax.swing.JFrame implements MouseListener,
 
         jScrollPane1.setViewportView(jTable1);
 
-        jbTimKH.setIcon(new javax.swing.ImageIcon("D:\\\\PhatTrienUngDung\\\\PTUD_2022_Nhom24_DHKTPM16A\\\\SourceCode\\\\PTUD_Nhom24_2022\\iCons\\iCon\\search.png")); // NOI18N
+        jbTimKH.setIcon(new javax.swing.ImageIcon("D:\\PhanTan2324\\BaiTapLon\\BaiTapLonPhanTan\\iCon\\search.png")); // NOI18N
 
-        jbLocKH.setIcon(new javax.swing.ImageIcon("D:\\\\PhatTrienUngDung\\\\PTUD_2022_Nhom24_DHKTPM16A\\\\SourceCode\\\\PTUD_Nhom24_2022\\iCons\\iCon\\sorting.png")); // NOI18N
+        jbLocKH.setIcon(new javax.swing.ImageIcon("D:\\PhanTan2324\\BaiTapLon\\BaiTapLonPhanTan\\iCon\\sorting.png")); // NOI18N
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -257,15 +257,15 @@ public class FRMQuanLiPhong extends javax.swing.JFrame implements MouseListener,
         jLabel5.setText("THÔNG TIN PHÒNG");
 
         btnThemNV.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        btnThemNV.setIcon(new javax.swing.ImageIcon("D:\\PhatTrienUngDung\\PTUD_2022_Nhom24_DHKTPM16A\\SourceCode\\PTUD_Nhom24_2022\\iCons\\iCon\\add.png")); // NOI18N
+        btnThemNV.setIcon(new javax.swing.ImageIcon("D:\\PhanTan2324\\BaiTapLon\\BaiTapLonPhanTan\\iCon\\add.png")); // NOI18N
         btnThemNV.setText("Thêm");
 
         btnSuaNV.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        btnSuaNV.setIcon(new javax.swing.ImageIcon("D:\\PhatTrienUngDung\\PTUD_2022_Nhom24_DHKTPM16A\\SourceCode\\PTUD_Nhom24_2022\\\\iCons\\iCon\\service.png")); // NOI18N
+        btnSuaNV.setIcon(new javax.swing.ImageIcon("D:\\PhanTan2324\\BaiTapLon\\BaiTapLonPhanTan\\iCon\\service.png")); // NOI18N
         btnSuaNV.setText("Sửa");
 
         btnLamMoi.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        btnLamMoi.setIcon(new javax.swing.ImageIcon("D:\\PhatTrienUngDung\\PTUD_2022_Nhom24_DHKTPM16A\\SourceCode\\PTUD_Nhom24_2022\\\\iCons\\iCon\\refresh.png")); // NOI18N
+        btnLamMoi.setIcon(new javax.swing.ImageIcon("D:\\PhanTan2324\\BaiTapLon\\BaiTapLonPhanTan\\iCon\\refresh.png")); // NOI18N
         btnLamMoi.setText("Làm Mới");
         btnLamMoi.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -274,7 +274,7 @@ public class FRMQuanLiPhong extends javax.swing.JFrame implements MouseListener,
         });
 
         btnXoaNV.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
-        btnXoaNV.setIcon(new javax.swing.ImageIcon("D:\\PhatTrienUngDung\\PTUD_2022_Nhom24_DHKTPM16A\\SourceCode\\PTUD_Nhom24_2022\\\\iCons\\iCon\\delete.png")); // NOI18N
+        btnXoaNV.setIcon(new javax.swing.ImageIcon("D:\\PhanTan2324\\BaiTapLon\\BaiTapLonPhanTan\\iCon\\delete.png")); // NOI18N
         btnXoaNV.setText("Xóa");
 
         jLabel9.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N

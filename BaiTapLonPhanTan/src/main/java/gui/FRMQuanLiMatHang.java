@@ -166,17 +166,17 @@ public class FRMQuanLiMatHang extends javax.swing.JFrame implements ActionListen
 
 		btnThemMH.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
 		btnThemMH.setIcon(
-				new javax.swing.ImageIcon("D:\\Desktop\\HocTap\\HocKi2_Nam 4_(2024_2025)\\LTPT_Java\\THNhom\\baiTapLonCKPTUD\\iCon\\add.png")); // NOI18N
+				new javax.swing.ImageIcon("D:\\PhanTan2324\\BaiTapLon\\BaiTapLonPhanTan\\iCon\\add.png")); // NOI18N
 		btnThemMH.setText("Thêm");
 
 		btnSuaMH.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
 		btnSuaMH.setIcon(
-				new javax.swing.ImageIcon("D:\\Desktop\\HocTap\\HocKi2_Nam 4_(2024_2025)\\LTPT_Java\\THNhom\\baiTapLonCKPTUD\\iCon\\service.png")); // NOI18N
+				new javax.swing.ImageIcon("D:\\PhanTan2324\\BaiTapLon\\BaiTapLonPhanTan\\iCon\\service.png")); // NOI18N
 		btnSuaMH.setText("Sửa");
 
 		btnLamMoiMH.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
 		btnLamMoiMH.setIcon(
-				new javax.swing.ImageIcon("D:\\Desktop\\HocTap\\HocKi2_Nam 4_(2024_2025)\\LTPT_Java\\THNhom\\baiTapLonCKPTUD\\iCon\\refresh.png")); // NOI18N
+				new javax.swing.ImageIcon("D:\\PhanTan2324\\BaiTapLon\\BaiTapLonPhanTan\\iCon\\refresh.png")); // NOI18N
 		btnLamMoiMH.setText("Làm mới");
 //		btnLamMoiMH.addActionListener(new java.awt.event.ActionListener() {
 //			public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -339,10 +339,10 @@ public class FRMQuanLiMatHang extends javax.swing.JFrame implements ActionListen
 		loadDsMH();
 
 		btnTimMH.setIcon(new javax.swing.ImageIcon(
-				"D:\\Desktop\\HocTap\\HocKi2_Nam 4_(2024_2025)\\LTPT_Java\\THNhom\\baiTapLonCKPTUD\\iCon\\search.png")); // NOI18N
+				"D:\\PhanTan2324\\BaiTapLon\\BaiTapLonPhanTan\\iCon\\search.png")); // NOI18N
 
 		btnLocMH.setIcon(new javax.swing.ImageIcon(
-				"D:\\Desktop\\HocTap\\HocKi2_Nam 4_(2024_2025)\\LTPT_Java\\THNhom\\baiTapLonCKPTUD\\iCon\\sorting.png")); // NOI18N
+				"D:\\PhanTan2324\\BaiTapLon\\BaiTapLonPhanTan\\iCon\\sorting.png")); // NOI18N
 
 		javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
 		jPanel4.setLayout(jPanel4Layout);

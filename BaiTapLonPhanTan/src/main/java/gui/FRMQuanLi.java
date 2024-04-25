@@ -51,7 +51,7 @@ public class FRMQuanLi extends javax.swing.JFrame{
         jButtonDatPhong.setBackground(new Color(255, 0, 255));
         FRMQuanLiDatPhong datPhong = new FRMQuanLiDatPhong(maTK);
         setTitle("Quản lí đặt phòng");
-//        jLayeredPane1.add(datPhong.getFRMDDP());
+        jLayeredPane1.add(datPhong.getFRMDDP());
         setLocationRelativeTo(null);
     }
     public static NhanVienDao nhanVienDao;
