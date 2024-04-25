@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.List;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.NoResultException;
@@ -41,11 +42,12 @@ public class DAOSinhMaTuDong {
  public String getMaKH() {
      String maKH = "";
      String sql = "SELECT CONCAT('KH', LPAD(IFNULL(SUBSTRING(maKhachHang, 3), 0) + 1, 3, '0')) FROM KhachHang WHERE maKhachHang LIKE 'KH%'";
-     Object obj = entityManager.createNativeQuery(sql).getSingleResult();
-     if (obj == null) {
+     List<Object> results = entityManager.createNativeQuery(sql).getResultList();
+     if (results.isEmpty()) {
          maKH = "KH001";
      } else {
-         String temp = obj.toString();
+         // handle multiple results here, for example by taking the first result
+         String temp = results.get(0).toString();
          int so = Integer.parseInt(temp.substring(2)) + 1;
          if (so < 10) {
              maKH = "KH00" + so;
@@ -61,11 +63,12 @@ public class DAOSinhMaTuDong {
     public String getMaNV() {
         String maNV = "";
         String sql = "SELECT CONCAT('NV', LPAD(IFNULL(SUBSTRING(maNhanVien, 3), 0) + 1, 3, '0')) FROM NhanVien WHERE maNhanVien LIKE 'NV%'";
-        Object obj = entityManager.createNativeQuery(sql).getSingleResult();
-        if (obj == null) {
+        List<Object> results = entityManager.createNativeQuery(sql).getResultList();
+        if (results.isEmpty()) {
             maNV = "NV001";
         } else {
-            String temp = obj.toString();
+            // handle multiple results here, for example by taking the first result
+            String temp = results.get(0).toString();
             int so = Integer.parseInt(temp.substring(2)) + 1;
             if (so < 10) {
                 maNV = "NV00" + so;
@@ -77,14 +80,16 @@ public class DAOSinhMaTuDong {
         }
         return maNV;
     }
+
     public String getMaMH() {
         String ma = "";
         String sql = "SELECT CONCAT('MH', LPAD(IFNULL(SUBSTRING(maMH, 3), 0) + 1, 3, '0')) FROM MatHang WHERE maMH LIKE 'MH%'";
-        Object obj = entityManager.createNativeQuery(sql).getSingleResult();
-        if (obj == null) {
+        List<Object> results = entityManager.createNativeQuery(sql).getResultList();
+        if (results.isEmpty()) {
             ma = "MH001";
         } else {
-            String temp = obj.toString();
+            // handle multiple results here, for example by taking the first result
+            String temp = results.get(0).toString();
             int so = Integer.parseInt(temp.substring(2)) + 1;
             if (so < 10) {
                 ma = "MH00" + so;
@@ -96,6 +101,7 @@ public class DAOSinhMaTuDong {
         }
         return ma;
     }
+
 
 
 }
