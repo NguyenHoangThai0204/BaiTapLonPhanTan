@@ -409,7 +409,7 @@ public class FRMQuanLi extends javax.swing.JFrame{
         setTitle("Quản lí thống kê");
         thongKe = new FRMQuanLiThongKe();
         jButtonThongKe.setForeground(Color.magenta);
-//        jLayeredPane1.add(thongKe.getFRMThongKe());
+        jLayeredPane1.add(thongKe.getFRMThongKe());
     }//GEN-LAST:event_jButtonThongKeActionPerformed
 
     private void jButtonMatHangActionPerformed(java.awt.event.ActionEvent evt) throws RemoteException {//GEN-FIRST:event_jButtonMatHangActionPerformed

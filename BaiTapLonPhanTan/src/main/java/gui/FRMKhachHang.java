@@ -1033,7 +1033,7 @@ public class FRMKhachHang extends javax.swing.JFrame implements MouseListener, A
 						txtCCCD.setText(kh.getCccd());
 						jcboGtinh.setSelectedItem(kh.getGioiTinh());
 						chooserNgaySinh.setDate(kh.getNgaySinh());
-						jcboLoaiKH.setSelectedItem(kh.getLoaiKH());
+						jcboLoaiKH.setSelectedItem(kh.getLoaiKH().toString());
 						break;
 					}
 				}

@@ -82,8 +82,8 @@ public class Test {
 	}
 
 	public static void main(String[] args) throws RemoteException {
-//		 EntityManager entityManager =
-//		 Persistence.createEntityManagerFactory("maria").createEntityManager();
+		 EntityManager entityManager =
+		 Persistence.createEntityManagerFactory("maria").createEntityManager();
 
 //        -----------------TEST NHANVIEN DAO ---------------------
 
@@ -198,9 +198,9 @@ public class Test {
 
         boolean kq = nhanVienDao.checkSdtNV("0352465972");
         if (kq) {
-            System.out.println("Số điện thoại đã tồn tại");
-        } else {
             System.out.println("Số điện thoại chưa tồn tại");
+        } else {
+            System.out.println("Số điện thoại đã tồn tại");
         }
 
 //        -----------------TEST HOADON DAO ---------------------

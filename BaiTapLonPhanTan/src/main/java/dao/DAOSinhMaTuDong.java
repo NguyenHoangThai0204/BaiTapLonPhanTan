@@ -14,7 +14,7 @@ public class DAOSinhMaTuDong {
     private EntityManager entityManager;
 
     public DAOSinhMaTuDong() {
-        entityManager = Persistence.createEntityManagerFactory("mssql").createEntityManager();
+        entityManager = Persistence.createEntityManagerFactory("maria").createEntityManager();
     }
 
     public String sinhMaTuDong(String tenBang, String tenCot) {
@@ -38,35 +38,35 @@ public class DAOSinhMaTuDong {
     }
 
  // tự động phát sinh mã KH
- 		public String getMaKH() {
- 			String maKH="";
- 			String sql = "select CONCAT('NV', RIGHT(CONCAT('000',ISNULL(right(max(maNhanVien),3),0) + 1),3)) from [dbo].[NhanVien] where maNhanVien like 'NV%'";
- 			Object obj = entityManager.createNativeQuery(sql).getSingleResult();
-			if (obj == null) {
-				maKH = "KH001";
-			} else {
-				String temp = obj.toString();
-				int so = Integer.parseInt(temp.substring("NV".length())) + 1;
-				if (so < 10) {
-					maKH = "KH00" + so;
-				} else if (so < 100) {
-					maKH = "KH0" + so;
-				} else {
-					maKH = "KH" + so;
-				}
-			}
- 			return maKH;
- 		}
-    // tự động phát sinh mã NV
+ public String getMaKH() {
+     String maKH = "";
+     String sql = "SELECT CONCAT('KH', LPAD(IFNULL(SUBSTRING(maKhachHang, 3), 0) + 1, 3, '0')) FROM KhachHang WHERE maKhachHang LIKE 'KH%'";
+     Object obj = entityManager.createNativeQuery(sql).getSingleResult();
+     if (obj == null) {
+         maKH = "KH001";
+     } else {
+         String temp = obj.toString();
+         int so = Integer.parseInt(temp.substring(2)) + 1;
+         if (so < 10) {
+             maKH = "KH00" + so;
+         } else if (so < 100) {
+             maKH = "KH0" + so;
+         } else {
+             maKH = "KH" + so;
+         }
+     }
+     return maKH;
+ }
+
     public String getMaNV() {
-        String maNV="";
-        String sql = "select CONCAT('NV', RIGHT(CONCAT('000',ISNULL(right(max(maNhanVien),3),0) + 1),3)) from [dbo].[NhanVien] where maNhanVien like 'NV%'";
+        String maNV = "";
+        String sql = "SELECT CONCAT('NV', LPAD(IFNULL(SUBSTRING(maNhanVien, 3), 0) + 1, 3, '0')) FROM NhanVien WHERE maNhanVien LIKE 'NV%'";
         Object obj = entityManager.createNativeQuery(sql).getSingleResult();
         if (obj == null) {
             maNV = "NV001";
         } else {
             String temp = obj.toString();
-            int so = Integer.parseInt(temp.substring("NV".length())) + 1;
+            int so = Integer.parseInt(temp.substring(2)) + 1;
             if (so < 10) {
                 maNV = "NV00" + so;
             } else if (so < 100) {
@@ -78,20 +78,24 @@ public class DAOSinhMaTuDong {
         return maNV;
     }
     public String getMaMH() {
-        String maMH = "";
-        try {
-            entityManager.getTransaction().begin();
-            Query query = entityManager.createQuery(
-                    "SELECT CONCAT('MH', RIGHT(CONCAT('000', COALESCE(CAST(SUBSTRING(m.maMH, 3) AS int), 0) + 1), 3)) FROM MatHang m WHERE m.maMH LIKE 'MH%'");
-            maMH = (String) query.getSingleResult();
-            entityManager.getTransaction().commit();
-        } catch (NoResultException e) {
-            // Xử lý nếu không tìm thấy kết quả
-            maMH = "MH001"; // Giá trị mặc định nếu không tìm thấy kết quả
-            entityManager.getTransaction().rollback();
-        } finally {
-            entityManager.close();
+        String ma = "";
+        String sql = "SELECT CONCAT('MH', LPAD(IFNULL(SUBSTRING(maMH, 3), 0) + 1, 3, '0')) FROM MatHang WHERE maMH LIKE 'MH%'";
+        Object obj = entityManager.createNativeQuery(sql).getSingleResult();
+        if (obj == null) {
+            ma = "MH001";
+        } else {
+            String temp = obj.toString();
+            int so = Integer.parseInt(temp.substring(2)) + 1;
+            if (so < 10) {
+                ma = "MH00" + so;
+            } else if (so < 100) {
+                ma = "MH0" + so;
+            } else {
+                ma = "MH" + so;
+            }
         }
-        return maMH;
+        return ma;
     }
+
+
 }
