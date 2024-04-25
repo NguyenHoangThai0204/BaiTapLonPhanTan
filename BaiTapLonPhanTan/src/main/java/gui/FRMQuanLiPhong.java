@@ -530,7 +530,7 @@ public class FRMQuanLiPhong extends javax.swing.JFrame implements MouseListener,
 
     public void loadPhongDuocChon(Phong p) throws RemoteException {
         LoaiPhong loaiP = loaiPhongDao.getLoaiPhongTheoMa(p.getLoaiPhong().getMaLoaiPhong());
-        modelPhong.addRow(new Object[]{p.getMaPhong(), loaiP.getTenLoaiPhong(), dfGiaP.format(p.getGiaPhong()), p.getTinhTrangPhong(), p.getTinhTrangPhong(), p.getSucChua(), p.getMoTa()});
+        modelPhong.addRow(new Object[]{p.getMaPhong(), loaiP.getTenLoaiPhong(), dfGiaP.format(p.getGiaPhong()), p.getTinhTrangPhong(), p.getSucChua(), p.getMoTa()});
     }
 
     private void loadDanhSachPhongTheoLoai(List<Phong> p2) throws RemoteException {
