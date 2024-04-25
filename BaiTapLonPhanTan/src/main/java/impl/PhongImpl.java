@@ -51,16 +51,11 @@ public class PhongImpl extends UnicastRemoteObject implements PhongDao {
 
     @Override
     public boolean huyPhong(String ma) throws RemoteException {
-//        em.getTransaction().begin();
-//        Phong p = em.find(Phong.class, ma);
-//        LoaiPhong loaiPhong = p.getLoaiPhong();
-//        loaiPhong.setMaLoaiPhong("LP004");
-//        p.setLoaiPhong(loaiPhong);
-//        em.persist(p);
-//        em.getTransaction().commit();
-        em.createQuery("UPDATE Phong p SET p.loaiPhong.maLoaiPhong = 'LP004' WHERE p.maPhong = :ma")
-                .setParameter("ma", ma)
-                .executeUpdate();
+        em.getTransaction().begin();
+        Phong p = em.find(Phong.class, ma);
+        LoaiPhong lp = em.find(LoaiPhong.class, "LP004");
+        p.setLoaiPhong(lp);
+        em.getTransaction().commit();
         return true;
     }
 
