@@ -57,5 +57,7 @@ public interface KhachHangDao extends Remote {
 
     // Load khách hàng theo tên
     public KhachHang getKHTheoTen(String info) throws RemoteException;
+    public KhachHang getKHTheoSDT(String sdt) throws RemoteException;
+
 
 }

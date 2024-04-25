@@ -151,7 +151,11 @@ public class FRMQuanLi extends javax.swing.JFrame{
         jButtonPhong.setText("Quản lí phòng");
         jButtonPhong.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonPhongActionPerformed(evt);
+                try {
+                    jButtonPhongActionPerformed(evt);
+                } catch (RemoteException e) {
+                    throw new RuntimeException(e);
+                }
             }
         });
         jButtonPhong.setContentAreaFilled(false);
@@ -423,7 +427,7 @@ public class FRMQuanLi extends javax.swing.JFrame{
         jLayeredPane1.add(matHang.getFRMMatHang());
     }//GEN-LAST:event_jButtonMatHangActionPerformed
 
-    private void jButtonPhongActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPhongActionPerformed
+    private void jButtonPhongActionPerformed(java.awt.event.ActionEvent evt) throws RemoteException {//GEN-FIRST:event_jButtonPhongActionPerformed
         // TODO add your handling code here:
          xoaMauButton();
         jLayeredPane1.removeAll();
@@ -431,7 +435,7 @@ public class FRMQuanLi extends javax.swing.JFrame{
         setTitle("Quản lí phòng");
         phong = new FRMQuanLiPhong();
         jButtonPhong.setForeground(Color.magenta);
-//        jLayeredPane1.add(phong.getFRMQuanLiPhong());
+        jLayeredPane1.add(phong.getFRMQuanLiPhong());
     }//GEN-LAST:event_jButtonPhongActionPerformed
 
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed

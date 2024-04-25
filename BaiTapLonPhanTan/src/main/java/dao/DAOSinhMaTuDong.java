@@ -104,21 +104,29 @@ public class DAOSinhMaTuDong {
 
     public String getMaPhong() {
         String ma = "";
-        String sql = "SELECT CONCAT('P', LPAD(IFNULL(SUBSTRING(maPhong, 3), 0) + 1, 3, '0')) FROM Phong WHERE maPhong LIKE 'P%'";
-        List<Object> results = entityManager.createNativeQuery(sql).getResultList();
-        if (results.isEmpty()) {
-            ma = "P001";
+        String sql = "SELECT CONCAT('P', LPAD(IFNULL(SUBSTRING(maPhong, 2), 0) + 1, 3, '0')) FROM Phong WHERE maPhong LIKE 'P%' ORDER BY maPhong DESC LIMIT 1";
+        Object result = entityManager.createNativeQuery(sql).getSingleResult();
+        if (result != null) {
+            String temp = result.toString();
+            int so = Integer.parseInt(temp.substring(1)) + 1;
+            ma = "P" + String.format("%03d", so);
         } else {
-            // handle multiple results here, for example by taking the first result
-            String temp = results.get(0).toString();
-            int so = Integer.parseInt(temp.substring(2)) + 1;
-            if (so < 10) {
-                ma = "P00" + so;
-            } else if (so < 100) {
-                ma = "P0" + so;
-            } else {
-                ma = "P" + so;
-            }
+            ma = "P001";
+        }
+        return ma;
+    }
+
+
+    public String getMaDDP() {
+        String ma = "";
+        String sql = "SELECT CONCAT('DDP', LPAD(IFNULL(SUBSTRING(maDDP, 4), 0) + 1, 3, '0')) FROM DonDatPhong WHERE maDDP LIKE 'DDP%' ORDER BY maDDP DESC LIMIT 1";
+        Object result = entityManager.createNativeQuery(sql).getSingleResult();
+        if (result != null) {
+            String temp = result.toString();
+            int so = Integer.parseInt(temp.substring(3)) + 1;
+            ma = "DDP" + String.format("%03d", so);
+        } else {
+            ma = "DDP001";
         }
         return ma;
     }

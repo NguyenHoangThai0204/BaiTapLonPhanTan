@@ -24,6 +24,7 @@ import java.util.ArrayList;
 
 public class KhachHangImpl extends UnicastRemoteObject implements KhachHangDao {
     private final EntityManager entityManager;
+
     public KhachHangImpl() throws RemoteException {
         entityManager = Persistence.createEntityManagerFactory("maria").createEntityManager();
     }
@@ -36,11 +37,11 @@ public class KhachHangImpl extends UnicastRemoteObject implements KhachHangDao {
             }
             entityManager.getTransaction().begin();
             String ma = khachHang.getLoaiKH().getMaLoaiKH();
-            if(ma == null) {
+            if (ma == null) {
                 throw new Exception("Mã loại khách hàng không được null");
             }
-            LoaiKH loaiKH = entityManager.find(LoaiKH.class,ma );
-            if(loaiKH == null) {
+            LoaiKH loaiKH = entityManager.find(LoaiKH.class, ma);
+            if (loaiKH == null) {
                 throw new Exception("Không tìm thấy loại khách hàng");
             }
             khachHang.setLoaiKH(loaiKH);
@@ -61,7 +62,7 @@ public class KhachHangImpl extends UnicastRemoteObject implements KhachHangDao {
         try {
             entityManager.getTransaction().begin();
             KhachHang khachHang1 = entityManager.find(KhachHang.class, khachHang.getMaKhangHang());
-            if(khachHang1 == null) {
+            if (khachHang1 == null) {
                 throw new Exception("Không tìm thấy khách hàng");
             }
             khachHang1.setTenKH(khachHang.getTenKH());
@@ -144,23 +145,27 @@ public class KhachHangImpl extends UnicastRemoteObject implements KhachHangDao {
                 .setParameter("info", info).getSingleResult();
     }
 
-	@Override
-	public boolean huyKH(String maKH) throws RemoteException {
-		// TODO Auto-generated method stub
-		try {
-			entityManager.getTransaction().begin();
-			KhachHang khachHang = entityManager.find(KhachHang.class, maKH);
-			if (khachHang == null) {
-				throw new Exception("Không tìm thấy khách hàng");
-			}
-			entityManager.remove(khachHang);
-			entityManager.getTransaction().commit();
-			return true;
-		} catch (Exception e) {
-			e.printStackTrace();
-			return false;
-		}
-	}
+    @Override
+    public boolean huyKH(String maKH) throws RemoteException {
+        // TODO Auto-generated method stub
+        try {
+            entityManager.getTransaction().begin();
+            KhachHang khachHang = entityManager.find(KhachHang.class, maKH);
+            if (khachHang == null) {
+                throw new Exception("Không tìm thấy khách hàng");
+            }
+            entityManager.remove(khachHang);
+            entityManager.getTransaction().commit();
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 
-
+    @Override
+    public KhachHang getKHTheoSDT(String sdt) throws RemoteException {
+        return entityManager.createQuery("SELECT kh FROM KhachHang kh WHERE kh.sdt = :sdt", KhachHang.class)
+                .setParameter("sdt", sdt).getSingleResult();
+    }
 }

@@ -165,6 +165,13 @@ public class NhanVienImpl extends UnicastRemoteObject implements NhanVienDao {
             return false;
         }
     }
+    @Override
+    public NhanVien getMaVaSdtNVChoDDP1(String info) throws RemoteException {
+        return (NhanVien) entityManager
+                .createQuery(
+                        "select nv from NhanVien nv where nv.maNhanVien = '" + info + "' or nv.sdt = '" + info + "'")
+                .getSingleResult();
+    }
 
     @Override
     public boolean checkCccdNV(String cccd) throws RemoteException {

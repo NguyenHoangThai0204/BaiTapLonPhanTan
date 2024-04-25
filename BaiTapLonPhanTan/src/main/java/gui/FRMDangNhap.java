@@ -213,7 +213,7 @@ public class FRMDangNhap extends javax.swing.JFrame implements ActionListener {
             if (nv == null) {
                 JOptionPane.showMessageDialog(null, "Không tìm thấy nhân viên tương ứng với tài khoản", "Thông báo", JOptionPane.ERROR_MESSAGE);
             } else if (!nv.getTrangThaiLamViec().equalsIgnoreCase("Đã nghỉ việc")) {
-                if (nv.getChucVu().equals("Quản lý") || nv.getChucVu().equals("Ph?c v?") || nv.getChucVu().equals("Thu ngân")|| nv.getChucVu().equals("Phóng viên")) {
+                if (nv.getChucVu().equals("Quản lý") || nv.getChucVu().equals("Phục vụ") || nv.getChucVu().equals("Thu ngân")|| nv.getChucVu().equals("Phóng viên")) {
                     FRMQuanLi frmQL = new FRMQuanLi(maTk);
                     frmQL.setVisible(true);
                     this.setVisible(false);

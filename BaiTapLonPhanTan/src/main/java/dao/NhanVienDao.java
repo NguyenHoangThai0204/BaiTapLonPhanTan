@@ -31,6 +31,7 @@ public interface NhanVienDao extends Remote {
     public ArrayList<NhanVien> getDanhSachNV() throws RemoteException;
     //Load 1 NV dang lam viec theo manv, sdt
     public ArrayList<NhanVien> getMaVaSdtNVChoDDP(String info) throws RemoteException;
+    public NhanVien getMaVaSdtNVChoDDP1(String info) throws RemoteException;
     public NhanVien getNVTheoMa(String ma) throws RemoteException;
     //Load 1 NV dang lam viec theo tenNV
     public ArrayList<NhanVien> getTenNV(String info) throws RemoteException;
